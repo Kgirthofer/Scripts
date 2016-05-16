@@ -15,7 +15,7 @@ do
     aws ec2 terminate-instances --instance-ids ${arr[index]}
   elif [ "${purge_time}" = "${date}" ]; then
     printf "found date purge for server %s (%s) - deleteing \n" ${server_name} ${arr[index]}
-    aws ec2 terminate-instances --instance-ids ${arr[index]
+    aws ec2 terminate-instances --instance-ids ${arr[index]}
   elif [ "${purge_time}" = "||||" ]; then
     printf "Server %s (%s) has no purge date - will never be purged \n" ${server_name} ${arr[index]}
   else
