@@ -1,0 +1,5 @@
+servers=(!AddServersHere)
+for server in ${servers[@]}; do
+  id=`aws ec2 describe-instances --filter Name=tag:Name,Values=${server} | grep &quot;InstanceId&quot; | awk &apos;{print $2}&apos; | tr -d &apos;&quot;,&apos;`
+  aws ec2 start-instances --instance-ids $id
+done
