@@ -12,17 +12,19 @@ tunnel-group <AWS 2nd Tunnel IP> ipsec-attributes
    isakmp keepalive threshold 10 retry 3
 exit
 
+access-list outside_access_in extended permit ip host <AWS Tunnel IP> host <External IP>
+access-list outside_access_in extended permit ip host <AWS 2nd Tunnel IP> host <External IP>
 access-list <UNIQUE CRYPTOMAP NAME> extended permit ip any4 <AWS CIDR> <AWS NETMASK>
 
-crypto map outside_map <NUM> match address outside <UNIQUE CRYPTOMAP NAME>
-crypto map outside_map <NUM> set pfs 
+crypto map outside_map <NUM> match address <UNIQUE CRYPTOMAP NAME>
+crypto map outside_map <NUM> set pfs group2
 crypto map outside_map <NUM> set peer <AWS Tunnel IP> <AWS 2nd Tunnel IP>
 crypto map outside_map <NUM> set ikev1 transform-set ESP-AES-128-SHA ESP-AES-128-MD5 ESP-AES-192-SHA ESP-AES-192-MD5 ESP-AES-256-SHA ESP-AES-256-MD5 ESP-3DES-SHA ESP-3DES-MD5 ESP-DES-SHA ESP-DES-MD5
 crypto map outside_map <NUM> set security-association lifetime seconds 3600
 crypto map outside_map <NUM> set security-association lifetime kilobytes unlimited
 crypto map outside_map <NUM> set nat-t-disable
 
-sla monitor 2
+sla monitor <NUM>
    type echo protocol ipIcmpEcho <IP OF AWS MACHINE> interface outside
    frequency 5
 exit
