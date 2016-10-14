@@ -28,4 +28,9 @@ sla monitor <NUM>
    type echo protocol ipIcmpEcho <IP OF AWS MACHINE> interface outside
    frequency 5
 exit
-sla monitor schedule 2 life forever start-time now
+sla monitor schedule <NUM> life forever start-time now
+
+object network <Object Name>
+ subnet <AWS CIDR> <AWS NETMASK>
+
+nat (inside,outside) source static obj_any obj_any destination static <Object Name> <Object Name>
